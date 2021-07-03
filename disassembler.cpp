@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#define isON(x,k) (((x)>>(k))&1)
 using namespace std;
 
 int PC = 0;
@@ -40,14 +41,54 @@ void createMaps()
     for(auto i:func7) cout<< i.first.first << " " << i.first.second << " " << i.second<<endl;
 }
 
+string getBinary(char c)
+{
+    string str;
+    for(int i=0; i<=7; i++){
+           if(isON(c,i)) str += "1";
+           else str += "0";
+    }
+    return str;
+}
+
+// Get 32-bit instructions
+void get32(string& code)
+{
+    int op = 0;
+    for(int i=6; i>=0; i--){
+        if(code[i] == '1') op |= (1<<i);
+    }
+    if(op == 51) printRIns(code);
+    else if(op == 19) printI1Ins(code);
+    else if(op == 3 || op == 103) printI2Ins(code);
+    else if(op == 35) printSIns(code);
+    else if(op == 111) printJIns(code);
+    else if(op == 15) printFIns(code);
+}
+
+
+
 void process(string& obj)
 {
-    int i=0;
-    for(;;){
-        char cur = obj[i];
+    int i=0, limit;
+    for(;i<obj.size();){
+        string encode;
+        char cur = obj[i++];
+        encode += getBinary(cur);
 
         // check if it is compressed instruction or not
+        if(encode[0] == '1' && encode[1] == '1') limit = 4;
+        else limit = 2;
 
+        // get the rest of the encode
+        for(int j=1; j<limit; j++){
+            cur = obj[i++];
+            encode += getBinary(cur);
+        }
+        cout<< encode<<endl;
+        if(encode[0] == '1' && encode[1] == '1') get32(encode);
+        //else get16(encode);
+        break;
     }
 }
 
