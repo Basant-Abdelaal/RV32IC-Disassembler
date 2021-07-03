@@ -52,11 +52,12 @@ string getBinary(char c)
     return str;
 }
 
-int orBits(string& code, int st, int en)
+int orBits(string& code, int st, int en, int j = 0)
 {
     int n = 0;
     for(int i=st; i<=en; i++){
-        if(code[i] == '1') n |= (1<<i);
+        if(code[i] == '1') n |= (1<<j);
+        j++;
     }
     return n;
 }
@@ -82,6 +83,84 @@ void printRIns(string& code, int opcode)
     // print the instruction
 }
 
+
+// Decode the I-instructions (load & jalr)
+void printI2Ins(string& code, int opcode)
+{
+    string type = opcodes[opcode];
+    int fun3;
+    fun3 = orBits(code, 12, 14);
+
+    string instruction = func3[{fun3, type}];
+
+    int rd, rs1, imm;
+    rd = orBits(code, 7, 11);
+    rs1 = orBits(code, 15, 19);
+    imm = orBits(code, 20, 31);
+
+    // print the instruction
+}
+
+// Decode the I1-instructions
+void printI1Ins(string& code, int opcode)
+{
+ string type = opcodes[opcode];
+ int fun3;
+ fun3 = orBits(code, 12, 14);
+ string instruction = func3[{fun3, type}];
+ int rd, rs1, imm;
+ if(instruction.length()==1)
+ {
+     int temp = orBits(code, 25, 31);
+     instruction = func3[{temp, instruction}];
+     rd  = orBits(code, 7, 11);
+     rs1 = orBits(code, 15, 19);
+     imm = orBits(code, 20, 24);
+
+ }
+ else
+ {
+     rd  = orBits(code, 7, 11);
+     rs1 = orBits(code, 15, 19);
+     imm = orBits(code, 20, 31);
+
+ }
+// print the instruction
+cout<< instruction << "   x" << rd << ",   x" << rs1 << ",  " << imm<<endl;
+}
+
+// Decode the S-instructions
+void printSIns(string& code, int opcode)
+{
+    string type = opcodes[opcode];
+    int fun3;
+    fun3 = orBits(code, 12, 14);
+
+    string instruction = func3[{fun3, type}];
+
+    int rs1, rs2, imm;
+    rs1 = orBits(code, 15, 19);
+    rs2 = orBits(code, 20, 24);
+    imm = orBits(code, 7, 11);
+    imm |= orBits(code, 25, 31, 5);
+
+    // print the instruction
+}
+
+// Decode the J-instructions
+void printJIns(string& code, int opcode)
+{
+    string instruction = opcodes[opcode];
+
+    int rd, imm;
+    rd = orBits(code, 7, 11);
+    imm = orBits(code, 12, 31, 12);
+
+    // print the instruction
+}
+
+
+
 // Get 32-bit instructions
 void get32(string& code)
 {
@@ -94,7 +173,7 @@ void get32(string& code)
     else if(op == 3 || op == 103) printI2Ins(code, op);
     else if(op == 35) printSIns(code, op);
     else if(op == 111) printJIns(code, op);
-    else if(op == 15) printFIns(code, op);
+    //else if(op == 15) printFIns(code, op);
     else output<< "Unknown Instruction";
 }
 
