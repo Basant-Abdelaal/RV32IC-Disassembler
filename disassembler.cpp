@@ -3,6 +3,7 @@
 using namespace std;
 
 int PC = 0;
+ofstream output;
 
 map<int,  string> opcodes;  // opcode  ,  type/instruction "r" --> R , "i" --> I , "s" --> S , "b" --> B , "j" --> jalr , "f" --> fence
 map<pair<int, string>, string> func3;  // <func3,  type>  ,  sub-type/instruction
@@ -51,19 +52,50 @@ string getBinary(char c)
     return str;
 }
 
+int orBits(string& code, int st, int en)
+{
+    int n = 0;
+    for(int i=st; i<=en; i++){
+        if(code[i] == '1') n |= (1<<i);
+    }
+    return n;
+}
+
+// Decode the R-instructions
+void printRIns(string& code, int opcode)
+{
+    string type = opcodes[opcode];
+    int fun3;
+    fun3 = orBits(code, 12, 14);
+
+    string sub = func3[{fun3, type}];
+    int fun7;
+    fun7 = orBits(code, 25, 31);
+
+    string instruction = func7[{fun7, sub}];
+
+    int rd, rs1, rs2;
+    rd = orBits(code, 7, 11);
+    rs1 = orBits(code, 15, 19);
+    rs2 = orBits(code, 20, 24);
+
+    // print the instruction
+}
+
 // Get 32-bit instructions
 void get32(string& code)
 {
     int op = 0;
-    for(int i=6; i>=0; i--){
+    for(int i=0; i<7; i++){
         if(code[i] == '1') op |= (1<<i);
     }
-    if(op == 51) printRIns(code);
-    else if(op == 19) printI1Ins(code);
-    else if(op == 3 || op == 103) printI2Ins(code);
-    else if(op == 35) printSIns(code);
-    else if(op == 111) printJIns(code);
-    else if(op == 15) printFIns(code);
+    if(op == 51) printRIns(code, op);
+    else if(op == 19) printI1Ins(code, op);
+    else if(op == 3 || op == 103) printI2Ins(code, op);
+    else if(op == 35) printSIns(code, op);
+    else if(op == 111) printJIns(code, op);
+    else if(op == 15) printFIns(code, op);
+    else output<< "Unknown Instruction";
 }
 
 
@@ -114,6 +146,7 @@ int main ( int argc, char *argv[] )
         return 0;
     }
 
+    output.open("argv[1].lsm");
     createMaps();
     process(contents);
 }
