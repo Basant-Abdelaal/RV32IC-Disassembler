@@ -1,0 +1,10 @@
+Disassembly of section .text:
+
+      0:   07808067             jalr     zero, ra, 120
+      4:   0022e2b3             or     t0, t0, sp
+      8:   000048aa             c.lwsp     a7, 136
+      a:   00000000             Illegal instruction
+      c:   00007181             c.lui     gp, -131072
+      e:   00000b62             c.slli     s6, 24
+     10:   60ffaff3             ecall
+     14:   0500893f             Unknown Instruction

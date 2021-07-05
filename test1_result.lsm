@@ -1,0 +1,11 @@
+Disassembly of section .text:
+
+      0:   00740413             addi     s0, s0, 7
+      4:   409504b3             sub     s1, a0, s1
+      8:   00008c25             c.xor     s0,  s1
+      a:   00007a95             c.lui     s5, -110592
+      c:   392100ef             jal     ra, 1039e   <Label0>
+     10:   00004381             c.li     t2, 0
+     12:   0000d17e             c.swsp     t6, 160
+     14:   0000301c             c.fld     a5, s0, 32
+     16:   0000ccc0             c.sw     s1, s0, 28

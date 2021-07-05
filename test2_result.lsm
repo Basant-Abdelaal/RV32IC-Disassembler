@@ -1,0 +1,10 @@
+Disassembly of section .text:
+
+      0:   fd860513             addi     a0, a2, -40
+      4:   00734283             lbu      t0, 7(t1)
+      8:   00000000             Illegal instruction
+      a:   000048aa             c.lwsp     a7, 136
+      c:   f8e12423             sw      sp, -120(a4)
+     10:   86ab88e3             beq      s7, a0, fffff880   <Label0>
+     14:   0000ffff             Unknown Instruction
+     18:   fe1ff0ef             jal     ra, fffffff8   <Label1>
