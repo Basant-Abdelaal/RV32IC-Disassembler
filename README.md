@@ -63,6 +63,7 @@ Member 1 (Basant):
 - Creating the orBits function that eases the excluding of the required bits to be encoded.
 - Handling the program counter and creating labels map to perform the bonus part (Using labels for branch and Jal instructions).
 - Getting arguments using cmd.
+
 Member 2 (Hashem):
 - Developing the get16 function and its corresponding maps.
 - Creating files (opcodes.txt, func3.txt, func7.txt).
