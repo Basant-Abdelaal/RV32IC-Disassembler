@@ -1,13 +1,13 @@
 0 h slli
 0 i srli
-2 i srai
+8 i srai
 0 q add
-2 q sub
+32 q sub
 0 r sll
 0 s slt
 0 t sltu
 0 u xor
 0 v srl
-2 v sra
+32 v sra
 0 u or
 0 t and

@@ -19,7 +19,7 @@
 4 i xori
 6 i ori
 7 i andi
-1 i h
+1 i slli
 5 i i
 5 i i
 0 r q
