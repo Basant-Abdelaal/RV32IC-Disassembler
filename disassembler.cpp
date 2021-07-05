@@ -82,6 +82,33 @@ void printRIns(string& code, int opcode)
 
     // print the instruction
 }
+// Decode the I1-instructions
+void printI1Ins(string& code, int opcode)
+{
+ string type = opcodes[opcode];
+ int fun3;
+ fun3 = orBits(code, 12, 14);
+ string instruction = func3[{fun3, type}];
+ int rd, rs1, imm;
+ if(instruction.length()==1)
+ {
+     int temp = orBits(code, 25, 31);
+     instruction = func3[{temp, instruction}];
+     rd  = orBits(code, 7, 11);
+     rs1 = orBits(code, 15, 19);
+     imm = orBits(code, 20, 24);
+
+ }
+ else
+ {
+     rd  = orBits(code, 7, 11);
+     rs1 = orBits(code, 15, 19);
+     imm = orBits(code, 20, 31);
+
+ }
+// print the instruction
+
+}
 
 
 // Decode the I-instructions (load & jalr)
