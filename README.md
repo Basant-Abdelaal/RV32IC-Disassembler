@@ -69,3 +69,4 @@ Member 2 (Hashem):
 - Sign extending the immediate values.
 - Developing formats for the compressed instructions.
 - Handling the program counter and creating labels map to perform the bonus part (Using labels for branch and Jal instructions).
+
